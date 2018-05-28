@@ -3,7 +3,12 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'echo "Hello World!"'
+        sh '''ls -latr
+
+
+
+
+&& echo "HEllo"'''
       }
     }
   }
