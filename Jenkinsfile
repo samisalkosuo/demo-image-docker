@@ -7,8 +7,8 @@ pipeline {
 
 
 
-
-&& echo "HEllo"'''
+'''
+        sh 'docker ps'
       }
     }
   }
