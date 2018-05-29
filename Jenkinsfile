@@ -12,7 +12,7 @@ docker build -t ${DOCKER_IMAGE_PROD}:${__ver} .'''
     }
     stage('Build Docker image DEV') {
       when {
-        branch 'master'
+        branch 'develop'
       }
       steps {
         sh '''__ver=$(cat VERSION)
