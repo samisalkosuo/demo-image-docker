@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'echo "Hello World!"'
+        sh 'docker build -t docker-image-master .'
       }
     }
   }
