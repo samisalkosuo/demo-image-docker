@@ -9,6 +9,8 @@ pipeline {
 
 '''
         sh 'docker ps'
+        sh 'helm'
+        sh 'kubectl'
       }
     }
   }
