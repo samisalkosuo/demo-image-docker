@@ -43,7 +43,7 @@ docker push mycluster.icp:8500/default/demo-image:develop
     }
     stage('bx pr login') {
       steps {
-        sh 'bx'
+        sh ' bx plugin list'
       }
     }
   }
