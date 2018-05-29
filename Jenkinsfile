@@ -8,21 +8,21 @@ docker build -t demo-image-develop:${__ver} .'''
       }
     }
     stage('Docker login') {
-          steps {
-            sh 'docker login -u admin -p admin mycluster.icp:8500'
-          }
-        }
-        stage('Docker tag & push to ICP registry') {
-          steps {
-            sh '''__ver=$(cat VERSION)
+      steps {
+        sh 'docker login -u admin -p admin mycluster.icp:8500'
+      }
+    }
+    stage('Docker tag & push to ICP registry') {
+      steps {
+        sh '''__ver=$(cat VERSION)
 docker tag demo-image-develop:${__ver} mycluster.icp:8500/default/demo-image:${__ver}
 docker push mycluster.icp:8500/default/demo-image:${__ver}
 '''
-          }
-        }
+      }
+    }
     stage('bx pr login') {
       when {
-              branch 'master'
+        branch 'master'
       }
       steps {
         sh ' bx pr login -a https://mycluster.icp:8443 --skip-ssl-validation -u admin -p admin -c id-mycluster-account'
@@ -30,7 +30,7 @@ docker push mycluster.icp:8500/default/demo-image:${__ver}
     }
     stage('deploy development') {
       when {
-              branch 'develop'
+        branch 'develop'
       }
       steps {
         sh ' echo Hello for DEVELOPMENT'
@@ -38,11 +38,15 @@ docker push mycluster.icp:8500/default/demo-image:${__ver}
     }
     stage('deploy production') {
       when {
-              branch 'master'
+        branch 'master'
       }
       steps {
         sh ' echo Hello for PROD'
       }
-    }    
+    }
+  }
+  environment {
+    ICP_USERNAME = 'admin'
+    ICP_PASSWORD = 'admin'
   }
 }
