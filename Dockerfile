@@ -1,6 +1,5 @@
-FROM ubuntu:18.04
+FROM ubuntu:16.04
 
-
-
+RUN echo "Hello from build"
 
 CMD ["echo","Hello world!!"]
