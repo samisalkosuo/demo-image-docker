@@ -26,8 +26,19 @@ kubectl config use-context mycluster.icp-context
       }
     }
     stage('Kubectl info') {
-      steps {
-        sh 'kubectl cluster-info'
+      parallel {
+        stage('Kubectl info') {
+          steps {
+            sh 'kubectl cluster-info'
+          }
+        }
+        stage('Docker tag & push') {
+          steps {
+            sh '''docker tag demo-image-develop:latest mycluster.icp:8500/default/demo-image:develop
+docker push mycluster.icp:8500/default/demo-image:develop
+'''
+          }
+        }
       }
     }
   }
