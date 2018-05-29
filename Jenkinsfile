@@ -6,7 +6,7 @@ pipeline {
         sh 'docker build -t demo-image-develop .'
       }
     }
-    stage('Configure') {
+    stage('Configure Kubectl') {
       steps {
         sh '''kubectl config set-cluster mycluster.icp --server=https://169.50.29.248:8001 --insecure-skip-tls-verify=true
 kubectl config set-context mycluster.icp-context --cluster=mycluster.icp
@@ -16,7 +16,7 @@ kubectl config use-context mycluster.icp-context
 '''
       }
     }
-    stage('Kube info') {
+    stage('Kubectl info') {
       steps {
         sh 'kubectl cluster-info'
       }
