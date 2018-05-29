@@ -3,7 +3,8 @@ pipeline {
   stages {
     stage('Build Docker image') {
       steps {
-        sh 'docker build -t demo-image-develop .'
+        sh '''__ver=$(cat VERSION)
+docker build -t demo-image-develop:${__ver} .'''
       }
     }
     stage('Configure Kubectl') {
@@ -34,8 +35,9 @@ kubectl config use-context mycluster.icp-context
         }
         stage('Docker tag & push') {
           steps {
-            sh '''docker tag demo-image-develop:latest mycluster.icp:8500/default/demo-image:develop
-docker push mycluster.icp:8500/default/demo-image:develop
+            sh '''__ver=$(cat VERSION)
+docker tag demo-image-develop:${__ver} mycluster.icp:8500/default/demo-image:${__ver}
+docker push mycluster.icp:8500/default/demo-image:${__ver}
 '''
           }
         }
