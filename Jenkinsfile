@@ -3,12 +3,8 @@ pipeline {
   stages {
     stage('Build Docker image') {
       steps {
-<<<<<<< HEAD
-        sh 'docker build -t docker-image-master .'
-=======
         sh '''__ver=$(cat VERSION)
 docker build -t demo-image-develop:${__ver} .'''
->>>>>>> develop
       }
     }
     stage('Configure Kubectl') {
