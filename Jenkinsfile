@@ -3,14 +3,8 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh '''ls -latr
-
-
-
-'''
-        sh 'docker ps'
-        sh 'helm'
-        sh 'kubectl'
+        sh 'docker build -t demo-image-develop .'
+        sh 'ls -latr'
       }
     }
   }
