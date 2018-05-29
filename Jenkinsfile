@@ -1,22 +1,34 @@
 pipeline {
   agent any
   stages {
-    stage('Build Docker image') {
+    stage('Build Docker image PROD') {
+      when {
+        branch 'master'
+      }
       steps {
         sh '''__ver=$(cat VERSION)
-docker build -t demo-image-develop:${__ver} .'''
+docker build -t ${DOCKER_IMAGE_PROD}:${__ver} .'''
+      }
+    }
+    stage('Build Docker image DEV') {
+      when {
+        branch 'master'
+      }
+      steps {
+        sh '''__ver=$(cat VERSION)
+docker build -t ${DOCKER_IMAGE_DEV}:${__ver} .'''
       }
     }
     stage('Docker login') {
       steps {
-        sh 'docker login -u admin -p admin mycluster.icp:8500'
+        sh 'docker login -u ${ICP_USERNAME} -p ${ICP_PASSWORD} ${ICP_REGISTRY_IP}'
       }
     }
     stage('Docker tag & push to ICP registry') {
       steps {
         sh '''__ver=$(cat VERSION)
-docker tag demo-image-develop:${__ver} mycluster.icp:8500/default/demo-image:${__ver}
-docker push mycluster.icp:8500/default/demo-image:${__ver}
+docker tag demo-image-develop:${__ver} ${ICP_REGISTRY_IP}/default/demo-image:${__ver}
+docker push ${ICP_REGISTRY_IP}/default/demo-image:${__ver}
 '''
       }
     }
@@ -25,7 +37,7 @@ docker push mycluster.icp:8500/default/demo-image:${__ver}
         branch 'master'
       }
       steps {
-        sh ' bx pr login -a https://mycluster.icp:8443 --skip-ssl-validation -u admin -p admin -c id-mycluster-account'
+        sh ' bx pr login -a https://mycluster.icp:8443 --skip-ssl-validation -u ${ICP_USERNAME} -p ${ICP_PASSWORD} -c id-mycluster-account'
       }
     }
     stage('deploy development') {
@@ -46,7 +58,10 @@ docker push mycluster.icp:8500/default/demo-image:${__ver}
     }
   }
   environment {
+    DOCKER_IMAGE_PROD = 'demo-image-master'
+    DOCKER_IMAGE_DEV = 'demo-image-develop'
     ICP_USERNAME = 'admin'
     ICP_PASSWORD = 'admin'
+    ICP_REGISTRY_IP = 'mycluster.icp:8500'
   }
 }
