@@ -13,9 +13,6 @@ docker build -t demo-image-develop:${__ver} .'''
           }
         }
         stage('Docker tag & push to ICP registry') {
-          when {
-              branch 'master'
-          }
           steps {
             sh '''__ver=$(cat VERSION)
 docker tag demo-image-develop:${__ver} mycluster.icp:8500/default/demo-image:${__ver}
