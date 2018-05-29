@@ -16,5 +16,10 @@ kubectl config use-context mycluster.icp-context
 '''
       }
     }
+    stage('Kube info') {
+      steps {
+        sh 'kubectl cluster-info'
+      }
+    }
   }
 }
