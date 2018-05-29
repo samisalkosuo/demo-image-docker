@@ -48,5 +48,21 @@ docker push mycluster.icp:8500/default/demo-image:${__ver}
         sh ' bx pr login -a https://mycluster.icp:8443 --skip-ssl-validation -u admin -p admin -c id-mycluster-account'
       }
     }
+    stage('deploy development') {
+      when {
+              branch 'develop'
+      }
+      steps {
+        sh ' echo Hello for DEVELOPMENT'
+      }
+    }
+    stage('deploy production') {
+      when {
+              branch 'master'
+      }
+      steps {
+        sh ' echo Hello for PROD'
+      }
+    }    
   }
 }
