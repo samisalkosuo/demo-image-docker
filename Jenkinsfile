@@ -17,7 +17,7 @@ docker build -t ${DOCKER_IMAGE_PROD}:${__ver} .'''
       steps {
         sh '''__ver=$(cat VERSION)
 docker build -t ${DOCKER_IMAGE_DEV}:${__ver} .
-docker images | grep ${DOCKER_IMAGE_DEV}'''
+ls -latr'''
       }
     }
     stage('Docker login') {
