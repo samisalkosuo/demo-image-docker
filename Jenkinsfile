@@ -61,7 +61,7 @@ docker push ${ICP_REGISTRY_IP}/default/demo-image:${__ver}
     DOCKER_IMAGE_PROD = 'demo-image-master'
     DOCKER_IMAGE_DEV = 'demo-image-develop'
     ICP_USERNAME = 'admin'
-    ICP_PASSWORD = 'admin'
+    ICP_PASSWORD = 'ICPdemo007'
     ICP_REGISTRY_IP = 'mycluster.icp:8500'
   }
 }
